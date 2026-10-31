@@ -251,6 +251,8 @@ export class CandiesService {
 
 (utilização do asyncHandler, tratamento de requisições e envio de respostas)
 
+(arquivos em views/candies/ como list.ejs, details.ejs e form.ejs serão criados depois)
+
 ARQUIVO: controllers/candies.controller.js
 
 ```js
