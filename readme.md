@@ -305,3 +305,59 @@ export class CandiesController {
   });
 }
 ```
+
+### Criação das rotas
+
+(validação de entrada, presença e tipo de campos para criação)
+
+ARQUIVO: middlewares/validate.create.candy.middleware.js
+
+```js
+import { AppError } from "../utils/AppError.js";
+
+export function validateCreateCandy(req, res, next) {
+  const { nome, preco } = req.body;
+
+  if (!nome) {
+    throw new AppError("Campo 'nome' é obrigatório", 400);
+  }
+
+  if (!preco) {
+    throw new AppError("Campo 'preco' é obrigatório", 400);
+  }
+
+  if (isNaN(Number(preco))) {
+    throw new AppError("Campo 'preco' deve ser um número", 400);
+  }
+
+  next();
+}
+```
+
+(roteamento das funções do controller, injeção de dependencias e aplicação de middlewares)
+
+ARQUIVO: routes/candies.routes.js
+
+```js
+import { CandyRepository } from "../repositories/candy.repository.js";
+import { CandyService } from "../services/candy.service.js";
+import { CandyController } from "../controllers/candy.controller.js";
+
+import { Router } from "express";
+import { validateCreateCandy } from "../middlewares/validate.create.candy.middleware.js";
+
+const repository = new CandyRepository();
+const service = new CandyService(repository);
+const controller = new CandyController(service);
+
+const router = new Router();
+
+router.post("/", validateCreateCandy, controller.create);
+router.get("/", controller.list);
+router.get("/novo", controller.form);
+router.get("/:id", controller.details);
+router.post("/:id", controller.edit);
+router.post("/:id/excluir", controller.delete);
+
+export default router;
+```
