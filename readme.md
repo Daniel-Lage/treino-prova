@@ -4,6 +4,8 @@ npm init -y
 npm i @prisma/adapter-better-sqlite3@7 @prisma/client@7 dotenv ejs express
 
 npm i -D nodemon prisma@7
+
+npx prisma init --datasource-provider sqlite --output ../generated/prisma --no-skills
 ```
 
 ARQUIVO: .gitignore
