@@ -98,3 +98,38 @@ export function asyncHandler(fn) {
   };
 }
 ```
+
+### Etapa 4
+
+ARQUIVO: prisma/schema.prisma
+
+(adiciona o/s modelos necessarios dependendo do tema do crud, exemplo usando o aquecimento crud)
+
+```
+model Candy {
+    id    Int    @id @default(autoincrement())
+    nome  String @unique
+    preco Int
+}
+```
+
+```
+npx prisma migrate dev --name init
+
+npx prisma generate
+```
+
+ARQUIVO: prisma/prisma.js
+
+```js
+import "dotenv/config";
+import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import { PrismaClient } from "../generated/prisma/client";
+
+const connectionString = `${process.env.DATABASE_URL}`;
+
+const adapter = new PrismaBetterSqlite3({ url: connectionString });
+const prisma = new PrismaClient({ adapter });
+
+export { prisma };
+```
