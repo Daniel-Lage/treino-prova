@@ -1,4 +1,4 @@
-### Etapa 1
+### Inicialização e instalação de dependencias do sistema
 
 ```ps
 npm init -y
@@ -7,6 +7,8 @@ npm i @prisma/adapter-better-sqlite3@7 @prisma/client@7 dotenv ejs express
 
 npm i -D nodemon prisma@7
 ```
+
+### Configuração inicial
 
 ARQUIVO: .gitignore
 
@@ -33,7 +35,7 @@ ARQUIVO: package.json
 + "type": "module"
 ```
 
-### Etapa 2
+### Inicialização do prisma
 
 ```ps
 npx prisma init --datasource-provider sqlite --output ../generated/prisma --no-skills
@@ -50,7 +52,7 @@ ARQUIVO: prisma/schema.prisma
 + provider = "prisma-client-js"
 ```
 
-### Etapa 3
+### Arquivos de tratamento de erro
 
 ARQUIVO: middlewares/error.middleware.js
 
@@ -99,11 +101,11 @@ export function asyncHandler(fn) {
 }
 ```
 
-### Etapa 4
-
-ARQUIVO: prisma/schema.prisma
+### Criação do(s) modelo(s) prisma
 
 (adiciona o/s modelos necessarios dependendo do tema do crud, exemplo usando o aquecimento crud)
+
+ARQUIVO: prisma/schema.prisma
 
 ```
 model Candy {
