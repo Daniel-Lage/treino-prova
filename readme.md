@@ -188,7 +188,7 @@ export class CandiesRepository {
 }
 ```
 
-### Criação do serviço
+### Criação do service
 
 (validação de regras de negócio)
 
@@ -197,7 +197,7 @@ ARQUIVO: services/candies.service.js
 ```js
 import { AppError } from "../utils/AppError.js";
 
-export class CandyService {
+export class CandiesService {
   constructor(candyRepository) {
     this.candyRepository = candyRepository;
   }
@@ -244,5 +244,64 @@ export class CandyService {
     await this.read(id);
     return await this.candyRepository.delete(id);
   }
+}
+```
+
+### Criação do controller
+
+(utilização do asyncHandler, tratamento de requisições e envio de respostas)
+
+ARQUIVO: controllers/candies.controller.js
+
+```js
+import { asyncHandler } from "../utils/asyncHandler.js";
+
+export class CandiesController {
+  constructor(candiesService) {
+    this.candiesService = candiesService;
+  }
+
+  list = asyncHandler(async (req, res) => {
+    const candies = await this.candiesService.list();
+
+    res.render("candies/list", { candies });
+  });
+
+  details = asyncHandler(async (req, res) => {
+    const candyId = Number(req.params.id);
+
+    const candy = await this.candiesService.read(candyId);
+
+    res.render("candies/details", { candy });
+  });
+
+  edit = asyncHandler(async (req, res) => {
+    const candyId = Number(req.params.id);
+    const payload = req.body;
+
+    const updatedCandy = await this.candiesService.update(candyId, payload);
+
+    res.redirect("/doces/" + updatedCandy.id);
+  });
+
+  delete = asyncHandler(async (req, res) => {
+    const candyId = Number(req.params.id);
+
+    await this.candiesService.delete(candyId);
+
+    res.redirect("/doces");
+  });
+
+  create = asyncHandler(async (req, res) => {
+    const payload = req.body;
+
+    const newCandy = await this.candiesService.create(payload);
+
+    res.redirect("/doces/" + newCandy.id);
+  });
+
+  form = asyncHandler(async (req, res) => {
+    res.render("candies/form");
+  });
 }
 ```
