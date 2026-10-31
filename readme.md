@@ -337,16 +337,16 @@ Roteamento das funções do controller, injeção de dependencias e aplicação 
 `routes/candies.routes.js`
 
 ```js
-import { CandyRepository } from "../repositories/candy.repository.js";
-import { CandyService } from "../services/candy.service.js";
-import { CandyController } from "../controllers/candy.controller.js";
+import { CandiesRepository } from "../repositories/candies.repository.js";
+import { CandiesService } from "../services/candies.service.js";
+import { CandiesController } from "../controllers/candies.controller.js";
 
 import { Router } from "express";
 import { validateCreateCandy } from "../middlewares/validate.create.candy.middleware.js";
 
-const repository = new CandyRepository();
-const service = new CandyService(repository);
-const controller = new CandyController(service);
+const repository = new CandiesRepository();
+const service = new CandiesService(repository);
+const controller = new CandiesController(service);
 
 const router = new Router();
 
