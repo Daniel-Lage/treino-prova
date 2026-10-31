@@ -10,7 +10,7 @@ npm i -D nodemon prisma@7
 
 ### Configuração inicial
 
-ARQUIVO: .gitignore
+`.gitignore`
 
 ```
 node_modules/
@@ -19,18 +19,14 @@ package-lock.json
 *.db
 ```
 
-ARQUIVO: package.json
+Adicionar comando para iniciar o servidor, e alterar o tipo dos arquivos js
+
+`package.json`
 
 ```
-- "description": ""
-- "main": "index.js"
 "scripts": {
-- "test": "echo \"Error: no test specified\" && exit 1"
 + "start": "nodemon watch server.js"
 }
-- "keywords": []
-- "author": ""
-- "license": "ISC"
 - "type": "commonjs"
 + "type": "module"
 ```
@@ -45,7 +41,7 @@ Prisma utiliza typescript por padrão, temos que alterar manualmente para js
 
 Renomeie `prisma7.config.ts` para `prisma7.config.js`
 
-ARQUIVO: prisma/schema.prisma
+`prisma/schema.prisma`
 
 ```
 - provider = "prisma-client"
@@ -54,9 +50,9 @@ ARQUIVO: prisma/schema.prisma
 
 ### Arquivos de tratamento de erro
 
-(não precisa ser exatamente assim, isso só faz o registro de erros)
+Não precisa ser exatamente assim, isso só faz o registro de erros
 
-ARQUIVO: middlewares/error.middleware.js
+`middlewares/error.middleware.js`
 
 ```js
 import { AppError } from "../utils/AppError.js";
@@ -76,7 +72,7 @@ export function errorMiddleware(err, req, res, next) {
 }
 ```
 
-ARQUIVO: utils/AppError.js
+`utils/AppError.js`
 
 ```js
 export class AppError extends Error {
@@ -91,7 +87,7 @@ export class AppError extends Error {
 }
 ```
 
-ARQUIVO: utils/asyncHandler.js
+`utils/asyncHandler.js`
 
 ```js
 export function asyncHandler(fn) {
@@ -103,9 +99,9 @@ export function asyncHandler(fn) {
 
 ### Criação dos modelos prisma
 
-(adiciona os modelos necessarios dependendo do tema do crud, exemplo usando o aquecimento crud)
+Adiciona os modelos necessarios dependendo do tema do crud, exemplo usando o aquecimento crud
 
-ARQUIVO: prisma/schema.prisma
+`prisma/schema.prisma`
 
 ```
 model Candy {
@@ -121,7 +117,7 @@ npx prisma migrate dev --name init
 npx prisma generate
 ```
 
-ARQUIVO: prisma/prisma.js
+`prisma/prisma.js`
 
 ```js
 import "dotenv/config";
@@ -138,9 +134,9 @@ export { prisma };
 
 ### Criação do repository
 
-(acesso ao banco atraves do cliente prisma)
+Acesso ao banco atraves do cliente prisma
 
-ARQUIVO: repositories/candies.repository.js
+`repositories/candies.repository.js`
 
 ```js
 import { prisma } from "../prisma/prisma.js";
@@ -190,9 +186,9 @@ export class CandiesRepository {
 
 ### Criação do service
 
-(validação de regras de negócio)
+Validação de regras de negócio
 
-ARQUIVO: services/candies.service.js
+`services/candies.service.js`
 
 ```js
 import { AppError } from "../utils/AppError.js";
@@ -249,11 +245,11 @@ export class CandiesService {
 
 ### Criação do controller
 
-(utilização do asyncHandler, tratamento de requisições e envio de respostas)
+Utilização do asyncHandler, tratamento de requisições e envio de respostas
 
-(arquivos em views/candies/ como list.ejs, details.ejs e form.ejs serão criados depois)
+Arquivos em views/candies/ como list.ejs, details.ejs e form.ejs serão criados depois
 
-ARQUIVO: controllers/candies.controller.js
+`controllers/candies.controller.js`
 
 ```js
 import { asyncHandler } from "../utils/asyncHandler.js";
@@ -310,9 +306,9 @@ export class CandiesController {
 
 ### Criação das rotas
 
-(validação de entrada, presença e tipo de campos para criação)
+Validação de entrada, presença e tipo de campos para criação
 
-ARQUIVO: middlewares/validate.create.candy.middleware.js
+`middlewares/validate.create.candy.middleware.js`
 
 ```js
 import { AppError } from "../utils/AppError.js";
@@ -336,9 +332,9 @@ export function validateCreateCandy(req, res, next) {
 }
 ```
 
-(roteamento das funções do controller, injeção de dependencias e aplicação de middlewares)
+Roteamento das funções do controller, injeção de dependencias e aplicação de middlewares
 
-ARQUIVO: routes/candies.routes.js
+`routes/candies.routes.js`
 
 ```js
 import { CandyRepository } from "../repositories/candy.repository.js";
