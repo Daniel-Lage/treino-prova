@@ -8,7 +8,7 @@ export class CandiesController {
   list = asyncHandler(async (req, res) => {
     const candies = await this.candiesService.list();
 
-    res.render("candy/list", { candies });
+    res.render("candies/list", { candies });
   });
 
   details = asyncHandler(async (req, res) => {
@@ -16,7 +16,7 @@ export class CandiesController {
 
     const candy = await this.candiesService.read(candyId);
 
-    res.render("candy/details", { candy });
+    res.render("candies/details", { candy });
   });
 
   edit = asyncHandler(async (req, res) => {
@@ -45,6 +45,6 @@ export class CandiesController {
   });
 
   form = asyncHandler(async (req, res) => {
-    res.render("candy/form");
+    res.render("candies/form");
   });
 }
