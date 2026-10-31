@@ -41,9 +41,9 @@ ARQUIVO: package.json
 npx prisma init --datasource-provider sqlite --output ../generated/prisma --no-skills
 ```
 
-```
-prisma7.config.js R
-```
+Prisma utiliza typescript por padrão, temos que alterar manualmente para js
+
+Renomeie `prisma7.config.ts` para `prisma7.config.js`
 
 ARQUIVO: prisma/schema.prisma
 
@@ -54,9 +54,9 @@ ARQUIVO: prisma/schema.prisma
 
 ### Arquivos de tratamento de erro
 
-ARQUIVO: middlewares/error.middleware.js
-
 (não precisa ser exatamente assim, isso só faz o registro de erros)
+
+ARQUIVO: middlewares/error.middleware.js
 
 ```js
 import { AppError } from "../utils/AppError.js";
@@ -101,9 +101,9 @@ export function asyncHandler(fn) {
 }
 ```
 
-### Criação do(s) modelo(s) prisma
+### Criação dos modelos prisma
 
-(adiciona o/s modelos necessarios dependendo do tema do crud, exemplo usando o aquecimento crud)
+(adiciona os modelos necessarios dependendo do tema do crud, exemplo usando o aquecimento crud)
 
 ARQUIVO: prisma/schema.prisma
 
