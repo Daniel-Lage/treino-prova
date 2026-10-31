@@ -1,6 +1,6 @@
 ### Etapa 1
 
-```
+```ps
 npm init -y
 
 npm i @prisma/adapter-better-sqlite3@7 @prisma/client@7 dotenv ejs express
@@ -35,7 +35,7 @@ ARQUIVO: package.json
 
 ### Etapa 2
 
-```
+```ps
 npx prisma init --datasource-provider sqlite --output ../generated/prisma --no-skills
 ```
 
@@ -48,4 +48,53 @@ ARQUIVO: prisma/schema.prisma
 ```
 - provider = "prisma-client"
 + provider = "prisma-client-js"
+```
+
+### Etapa 3
+
+ARQUIVO: middlewares/error.middleware.js
+
+(não precisa ser exatamente assim, isso só faz o registro de erros)
+
+```js
+import { AppError } from "../utils/AppError.js";
+
+export function errorMiddleware(err, req, res, next) {
+  if (err instanceof AppError) {
+    console.error(
+      `Error ${err.statusCode}: ${req.method}(${req.path}) -> "${err.message}"`,
+    );
+
+    return res.status(err.statusCode).json({ error: err.message });
+  }
+
+  console.error(`Error: ${req.method}(${req.path}) -> "${err.message}"`);
+
+  res.status(500).json({ error: "Internal Server Error" });
+}
+```
+
+ARQUIVO: utils/AppError.js
+
+```js
+export class AppError extends Error {
+  statusCode;
+  name;
+
+  constructor(message, statusCode) {
+    super(message);
+    this.statusCode = statusCode;
+    this.name = "AppError";
+  }
+}
+```
+
+ARQUIVO: utils/asyncHandler.js
+
+```js
+export function asyncHandler(fn) {
+  return function (req, res, next) {
+    Promise.resolve(fn(req, res, next)).catch(next);
+  };
+}
 ```
