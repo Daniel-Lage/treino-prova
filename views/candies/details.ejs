@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../partials/head', { page_title: candy.nome }) %>
+
+<body>
+  <a href="/doces" class="btn">Voltar a lista de doces</a>
+
+  <div class="candy-card">
+    <div><%= candy.nome %></div>
+    <div>R$ <%= candy.preco / 100 %></div>
+  </div>
+
+  <form action="/doces/<%= candy.id %>" method="POST" class="form">
+    <div class="form-field">
+      <label for="nome">Nome</label>
+      <input type="text" id="nome" name="nome" value="<%= candy.nome %>" />
+    </div>
+    <div class="form-field">
+      <label for="preco">Preço (em centavos)</label>
+      <input type="number" id="preco" name="preco" value="<%= candy.preco %>" />
+    </div>
+    <button type="submit" class="btn">Atualizar doce</button>
+  </form>
+
+  <form action="/doces/<%= candy.id %>/excluir" method="POST">
+    <button type="submit" class="btn btn-danger">Excluir doce</button>
+  </form>
+
+</body>
+
+</html>

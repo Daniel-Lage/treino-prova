@@ -396,3 +396,191 @@ app.listen(PORT, () =>
   console.log(`Delivery Tracker rodando em http://localhost:${PORT}`),
 );
 ```
+
+### Criação das views e styles
+
+`public/styles.css`
+
+```css
+html,
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #faf8fa;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+  border-color: #c82333;
+}
+
+.candy-card {
+  display: flex;
+  width: fit-content;
+  gap: 20px;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.candy-card:hover {
+  background-color: #eeeeee;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 10px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-field label {
+  font-weight: bold;
+}
+
+.form-field input {
+  padding: 8px;
+  width: 200px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+}
+```
+
+`views/partials/head.ejs`
+
+```html
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="/styles.css" rel="stylesheet" type="text/css" />
+  <title>Treino Prova - <%= page_title %></title>
+</head>
+```
+
+`views/candies/details.ejs`
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head', { page_title: candy.nome }) %>
+
+  <body>
+    <a href="/doces" class="btn">Voltar a lista de doces</a>
+
+    <div class="candy-card">
+      <div><%= candy.nome %></div>
+      <div>R$ <%= candy.preco / 100 %></div>
+    </div>
+
+    <form action="/doces/<%= candy.id %>" method="POST" class="form">
+      <div class="form-field">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" value="<%= candy.nome %>" />
+      </div>
+      <div class="form-field">
+        <label for="preco">Preço (em centavos)</label>
+        <input
+          type="number"
+          id="preco"
+          name="preco"
+          value="<%= candy.preco %>"
+        />
+      </div>
+      <button type="submit" class="btn">Atualizar doce</button>
+    </form>
+
+    <form action="/doces/<%= candy.id %>/excluir" method="POST">
+      <button type="submit" class="btn btn-danger">Excluir doce</button>
+    </form>
+  </body>
+</html>
+```
+
+`views/candies/form.ejs`
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head', { page_title: 'Crie um Doce' }) %>
+
+  <body>
+    <a href="/doces" class="btn">Voltar a lista de doces</a>
+
+    <form action="/doces" method="POST" class="form">
+      <div class="form-field">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="nome" required />
+      </div>
+      <div class="form-field">
+        <label for="preco">Preço (em centavos)</label>
+        <input type="number" id="preco" name="preco" required />
+      </div>
+      <button type="submit">Criar Doce</button>
+    </form>
+  </body>
+</html>
+```
+
+`views/candies/list.ejs`
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head', { page_title: 'Lista de Doces' }) %>
+
+  <body>
+    <h1>Lista de Doces</h1>
+
+    <% if (candies.length === 0) { %>
+    <p>Nenhum doce encontrado.</p>
+    <% } else { candies.forEach(candy => {%>
+    <a href="/doces/<%= candy.id %>" class="candy-card">
+      <div><%= candy.nome %></div>
+      <div>R$ <%= (candy.preco / 100).toFixed(2) %></div>
+    </a>
+    <% }); } %>
+
+    <a href="/doces/novo" class="btn">Criar novo doce</a>
+  </body>
+</html>
+```

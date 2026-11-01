@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../partials/head', { page_title: 'Lista de Doces' }) %>
+
+<body>
+  <h1>Lista de Doces</h1>
+
+  <% if (candies.length === 0) { %>
+  <p>Nenhum doce encontrado.</p>
+  <% } else { candies.forEach(candy => {%>
+  <a href="/doces/<%= candy.id %>" class="candy-card">
+    <div><%= candy.nome %></div>
+    <div>R$ <%= (candy.preco / 100).toFixed(2) %></div>
+  </a>
+  <% }); } %>
+
+  <a href="/doces/novo" class="btn">Criar novo doce</a>
+
+</body>
+
+</html>
