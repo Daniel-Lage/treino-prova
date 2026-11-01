@@ -194,8 +194,8 @@ Validação de regras de negócio
 import { AppError } from "../utils/AppError.js";
 
 export class CandiesService {
-  constructor(candyRepository) {
-    this.candyRepository = candyRepository;
+  constructor(candiesRepository) {
+    this.candiesRepository = candiesRepository;
   }
 
   async create(payload) {
@@ -205,21 +205,21 @@ export class CandiesService {
       throw new AppError("Preço deve ser maior que zero", 400);
     }
 
-    const existingCandy = await this.candyRepository.readByName(payload.nome);
+    const existingCandy = await this.candiesRepository.readByName(payload.nome);
 
     if (existingCandy) {
       throw new AppError("Doce já cadastrado", 409);
     }
 
-    return await this.candyRepository.create(payload);
+    return await this.candiesRepository.create(payload);
   }
 
   async list() {
-    return await this.candyRepository.list();
+    return await this.candiesRepository.list();
   }
 
   async read(id) {
-    const candy = await this.candyRepository.read(id);
+    const candy = await this.candiesRepository.read(id);
 
     if (!candy) {
       throw new AppError("Doce não foi encontrado", 404);
@@ -233,12 +233,12 @@ export class CandiesService {
 
     payload.preco = Number(payload.preco);
 
-    return await this.candyRepository.update(id, payload);
+    return await this.candiesRepository.update(id, payload);
   }
 
   async delete(id) {
     await this.read(id);
-    return await this.candyRepository.delete(id);
+    return await this.candiesRepository.delete(id);
   }
 }
 ```
