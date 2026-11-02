@@ -308,7 +308,7 @@ app.use((req, res) => res.status(404).json({ erro: "recurso não encontrado" }))
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () =>
-  console.log(`Delivery Tracker rodando em http://localhost:${PORT}`),
+  console.log(`Servidor rodando em http://localhost:${PORT}`),
 );
 ```
 
