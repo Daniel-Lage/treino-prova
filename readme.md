@@ -263,7 +263,7 @@ const repository = new CandiesRepository();
 const service = new CandiesService(repository);
 const controller = new CandiesController(service);
 
-const router = new Router();
+const router = Router();
 
 router.post("/", validateCreateCandy, controller.create);
 router.get("/", controller.list);
