@@ -112,9 +112,13 @@ model Candy {
 ```
 
 Outros tipos do prisma
+
 Float
+
 Decimal
+
 Boolean
+
 Datetime? <- indica campo opcional
 
 Enum <- definido por você
@@ -136,6 +140,9 @@ model Candy {
     categoria Category
 }
 ```
+
+Para aplicar alterações no schema (nesse caso cria uma migração com nome "init")
+
 ```
 npx prisma migrate dev --name init
 
@@ -178,10 +185,15 @@ export class CandiesRepository {
 ```
 
 Funções do prisma que serão usadas:
+
 prisma.candy.create({data: payload});
+
 prisma.candy.findMany();
+
 prisma.candy.findUnique({where:{id}});
+
 prisma.candy.update({where:{id},data:payload});
+
 prisma.candy.delete({where:{id}});
 
 ### Criação do service
