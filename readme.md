@@ -186,15 +186,13 @@ export class CandiesRepository {
 
 Funções do prisma que serão usadas:
 
+```js
 prisma.candy.create({data: payload});
-
 prisma.candy.findMany();
-
 prisma.candy.findUnique({where:{id}});
-
 prisma.candy.update({where:{id},data:payload});
-
 prisma.candy.delete({where:{id}});
+```
 
 ### Criação do service
 
