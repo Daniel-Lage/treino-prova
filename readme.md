@@ -103,7 +103,7 @@ Adiciona os modelos necessarios dependendo do tema do crud, exemplo usando o aqu
 
 `prisma/schema.prisma`
 
-```
+```prisma
 model Candy {
     id    Int    @id @default(autoincrement())
     nome  String @unique
@@ -111,6 +111,31 @@ model Candy {
 }
 ```
 
+Outros tipos do prisma
+Float
+Decimal
+Boolean
+Datetime? <- indica campo opcional
+
+Enum <- definido por você
+```prisma
+enum Category {
+    CHOCOLATE
+    AZEDO
+    SALGADO
+}
+```
+
+Poderia ser utilizado
+
+```prisma
+model Candy {
+    id    Int    @id @default(autoincrement())
+    nome  String @unique
+    preco Int
+    categoria Category
+}
+```
 ```
 npx prisma migrate dev --name init
 
@@ -151,6 +176,13 @@ export class CandiesRepository {
 
 ...
 ```
+
+Funções do prisma que serão usadas:
+prisma.candy.create({data: payload});
+prisma.candy.findMany();
+prisma.candy.findUnique({where:{id}});
+prisma.candy.update({where:{id},data:payload});
+prisma.candy.delete({where:{id}});
 
 ### Criação do service
 
